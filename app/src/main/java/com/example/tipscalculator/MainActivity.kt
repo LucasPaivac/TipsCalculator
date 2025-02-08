@@ -1,12 +1,16 @@
 package com.example.tipscalculator
 
+import android.R
 import android.content.Context
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import com.example.tipscalculator.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -15,6 +19,7 @@ private lateinit var binding: ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -25,6 +30,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         var percentage: Int = 0
+
+        val colorStateList = ColorStateList(
+            arrayOf(
+                intArrayOf(R.attr.state_checked), // Checked state
+                intArrayOf() // Default state
+            ),
+            intArrayOf(
+                Color.parseColor("#26736B"),  // Color when checked
+                Color.parseColor("#808080")  // Color when unchecked
+            )
+        )
+        binding.rbOptionOne.buttonTintList = colorStateList
+        binding.rbOptionTwo.buttonTintList = colorStateList
+        binding.rbOptionThree.buttonTintList = colorStateList
 
         binding.rbOptionOne.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -44,46 +63,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.num_people,
-            android.R.layout.simple_spinner_item
-        )
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        binding.spinnerNumberOfPeople.adapter = adapter
-
-        var nPeopleSelected: String = "1"
-
-        binding.spinnerNumberOfPeople.setSelection(0)
-
-        binding.spinnerNumberOfPeople.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (parent != null) {
-                    nPeopleSelected = parent.getItemAtPosition(position).toString()
-                }else{
-                    nPeopleSelected = parent?.getItemAtPosition(0).toString()
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
-
         binding.btnCalculate.setOnClickListener {
             val totalTableTemp = binding.tieTotal.text
             val nPeopleTemp = binding.tiePeople.text
 
             if (
                 totalTableTemp?.isEmpty() == true ||
-                /*nPeopleTemp?.isEmpty() == true ||*/
+                nPeopleTemp?.isEmpty() == true ||
                 binding.rgPercentOptions.checkedRadioButtonId == -1
             ) {
 
@@ -92,17 +78,23 @@ class MainActivity : AppCompatActivity() {
                 Snackbar.make(view, "Preencha todos os campos", Snackbar.LENGTH_LONG).show()
             } else {
                 val totalTable: Float = totalTableTemp.toString().toFloat()
-                //val nPeople: Int = nPeopleTemp.toString().toInt()
-                val nPeople: Int = nPeopleSelected.toInt()
+                val nPeople: Int = nPeopleTemp.toString().toInt()
 
                 val totalTemp = totalTable / nPeople
                 val tips = totalTemp * percentage / 100
                 val totalWithTips = totalTemp + tips
 
-                val totalWithTipsStr = String.format("%.2f", totalWithTips)
+                val totalTableStr = "R$" + String.format("%.2f", totalTable)
+                val totalWithTipsStr = "R$" + String.format("%.2f", totalWithTips)
 
-                binding.tvResultLabel.text = "O valor para cada pessoa é:"
-                binding.tvResult.text = "R$$totalWithTipsStr"
+                val intent = Intent(this,  SummaryActivity::class.java)
+                intent.apply {
+                    putExtra(KEY_TOTAL_TABLE, totalTableStr)
+                    putExtra(KEY_N_PEOPLE, nPeople)
+                    putExtra(KEY_PERCENTAGE, percentage)
+                    putExtra(KEY_TOTAL, totalWithTipsStr)
+                }
+                startActivity(intent)
 
                 hideKeyboard(it)
             }
@@ -113,10 +105,10 @@ class MainActivity : AppCompatActivity() {
             binding.tieTotal.setText("")
             binding.tiePeople.setText("")
             binding.rgPercentOptions.clearCheck()
-            binding.tvResultLabel.text = ""
-            binding.tvResult.text = ""
             binding.main.clearFocus()
             hideKeyboard(it)
+
+
 
         }
 

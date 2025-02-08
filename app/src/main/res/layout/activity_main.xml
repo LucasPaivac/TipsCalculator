@@ -10,9 +10,12 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
         android:text="Tips Calculator"
         android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_900"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,6 +35,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
+        app:boxStrokeColor="@color/primary_900"
+        app:cursorColor="@color/primary_900"
+        app:hintTextColor="@color/primary_900"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_description">
@@ -51,6 +57,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
+        app:boxStrokeColor="@color/primary_900"
+        app:cursorColor="@color/primary_900"
+        app:hintTextColor="@color/primary_900"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_total">
@@ -65,27 +74,18 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/spinner_number_of_people"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_number_of_people"/>
-
     <RadioGroup
         android:id="@+id/rg_percent_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@id/til_number_of_people"
         app:layout_constraintStart_toStartOf="@id/til_number_of_people"
-        app:layout_constraintTop_toBottomOf="@id/spinner_number_of_people">
+        app:layout_constraintTop_toBottomOf="@id/til_number_of_people">
 
         <RadioButton
             android:id="@+id/rb_option_one"
@@ -112,8 +112,9 @@
         android:id="@+id/btn_clear"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/primary_900"
         android:text="Limpar"
         app:layout_constraintEnd_toStartOf="@id/gl_vertical"
         app:layout_constraintStart_toStartOf="@id/til_number_of_people"
@@ -131,32 +132,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/primary_900"
         android:text="Calcular"
         app:layout_constraintEnd_toEndOf="@id/til_number_of_people"
         app:layout_constraintStart_toEndOf="@id/gl_vertical"
         app:layout_constraintTop_toBottomOf="@id/rg_percent_options" />
-
-    <TextView
-        android:id="@+id/tv_result_label"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="16dp"
-        tools:text="O valor para cada pessoa é:"
-        android:textSize="24sp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/btn_calculate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/tv_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        tools:text="50.0"
-        android:textSize="48sp"
-        app:layout_constraintTop_toBottomOf="@id/tv_result_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
