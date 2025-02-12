@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.example.tipscalculator.databinding.ActivityMainBinding
+import com.google.android.material.internal.ViewUtils
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 
 private lateinit var binding: ActivityMainBinding
@@ -87,31 +89,31 @@ class MainActivity : AppCompatActivity() {
                 val totalTableStr = "R$" + String.format("%.2f", totalTable)
                 val totalWithTipsStr = "R$" + String.format("%.2f", totalWithTips)
 
-                val intent = Intent(this,  SummaryActivity::class.java)
+                val intent = Intent(this, SummaryActivity::class.java)
                 intent.apply {
                     putExtra(KEY_TOTAL_TABLE, totalTableStr)
                     putExtra(KEY_N_PEOPLE, nPeople)
                     putExtra(KEY_PERCENTAGE, percentage)
                     putExtra(KEY_TOTAL, totalWithTipsStr)
                 }
-                startActivity(intent)
-
+                clean()
                 hideKeyboard(it)
+                startActivity(intent)
             }
         }
 
         binding.btnClear.setOnClickListener {
-
-            binding.tieTotal.setText("")
-            binding.tiePeople.setText("")
-            binding.rgPercentOptions.clearCheck()
-            binding.main.clearFocus()
             hideKeyboard(it)
-
-
-
+            clean()
         }
 
+    }
+
+    private fun clean(){
+        binding.tieTotal.setText("")
+        binding.tiePeople.setText("")
+        binding.rgPercentOptions.clearCheck()
+        binding.main.clearFocus()
 
     }
 }

@@ -36,5 +36,9 @@ class SummaryActivity : AppCompatActivity() {
 
         binding.tvDateHour.text = dateTimeFormatted
 
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
     }
 }
