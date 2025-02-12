@@ -21,7 +21,7 @@ private lateinit var binding: ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         var percentage: Int = 0
 
-        val colorStateList = ColorStateList(
+        /*val colorStateList = ColorStateList(
             arrayOf(
                 intArrayOf(R.attr.state_checked), // Checked state
                 intArrayOf() // Default state
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         )
         binding.rbOptionOne.buttonTintList = colorStateList
         binding.rbOptionTwo.buttonTintList = colorStateList
-        binding.rbOptionThree.buttonTintList = colorStateList
+        binding.rbOptionThree.buttonTintList = colorStateList*/
 
         binding.rbOptionOne.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
